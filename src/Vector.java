@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class Vector<T> implements InterfazStack<T>{
-    
     private ArrayList<T> stack;
 
     public T pop(){

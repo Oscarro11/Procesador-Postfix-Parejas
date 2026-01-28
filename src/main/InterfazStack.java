@@ -1,3 +1,5 @@
+package main;
+
 public interface InterfazStack<T>{
     T pop();
     void push(T dato);

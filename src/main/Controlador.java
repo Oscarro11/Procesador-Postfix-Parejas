@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Controlador {
     private Vector<Integer> vector;
@@ -21,7 +22,7 @@ public class Controlador {
         reiniciarVector();
     }
 
-    public String procesarDocumento(){
+    public String procesarDocumentoRString(){
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < lector.cantidadLineas(); i++){
@@ -34,39 +35,51 @@ public class Controlador {
         return builder.toString();
     }
 
-    private int procesarLinea(String linea){
-        int total = 0;
+    public ArrayList<Integer> procesarDocumentoRNumero(){
+        ArrayList<Integer> resultados = new ArrayList<Integer>();
 
-        for (char elemento : linea.toCharArray()) {
-            if (Character.isDigit(elemento)) {
-                vector.push(Character.getNumericValue(elemento));
-            }
-            else {
-                int operandoA = vector.pop();
+        for (int i = 0; i < lector.cantidadLineas(); i++){
+            String linea = lector.textoLinea(i);
+            int resultadoLinea = procesarLinea(linea);
+            resultados.add(resultadoLinea);
+        }
+
+        return resultados;
+    }
+
+    private int procesarLinea(String linea){
+        String[] contenidoLinea = linea.split("\\s+");
+
+        for (String elemento : contenidoLinea) {
+            try {
+                int numero = Integer.parseInt(elemento);
+                vector.push(numero);
+            } catch (Exception e) {
                 int operandoB = vector.pop();
+                int operandoA = vector.pop();
                 int resultado = decifrarCalculo(elemento, operandoA, operandoB);
                 vector.push(resultado);
             }
         }
 
-        return total;
+        return vector.pop();
     }
 
-    private int decifrarCalculo(char operador, int operandoA, int operandoB){
+    private int decifrarCalculo(String operador, int operandoA, int operandoB){
         switch (operador) {
-            case '+':
+            case "+":
                 return operandoA + operandoB;
                 
-            case '-':
+            case "-":
                 return operandoA - operandoB;
 
-            case '*':
+            case "*":
                 return operandoA * operandoB;
 
-            case '/':
+            case "/":
                 return operandoA / operandoB;
 
-            case '%':
+            case "%":
                 return operandoA % operandoB;
 
             default:

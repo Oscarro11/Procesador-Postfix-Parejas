@@ -6,6 +6,10 @@ import java.util.NoSuchElementException;
 public class Vector<T> implements InterfazStack<T>{
     private ArrayList<T> stack;
 
+    public Vector(){
+        stack = new ArrayList<T>();
+    }
+
     public T pop(){
         try{
             T elementoSuperior = stack.removeLast();

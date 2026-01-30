@@ -12,6 +12,8 @@ public class Controlador {
     }
 
     public void crearLector(String rutaArchivo){
+        rutaArchivo = rutaArchivo.replace("\"", "");
+        
         try {
            lector = new LectorDeTexto(rutaArchivo); 
         } catch (IOException e) {

@@ -21,8 +21,14 @@ public class App {
             switch (scanner.nextLine()) {
                 case "1":
                     escribir("Ingrese la ruta absoluta del archivo a usar\n");
-                    controlador = new Controlador(scanner.nextLine());
-                    escribir("El archivo se ha creado exitosamente\n");
+                    
+                    try {
+                        controlador = new Controlador(scanner.nextLine());
+                        escribir("El archivo se ha creado exitosamente\n");
+                    } catch (Exception e) {
+                        escribir(e.getMessage() + "\n\n");
+                    }
+                    
                     break; 
 
                 case "2":

@@ -10,13 +10,13 @@ public class Vector<T> implements InterfazStack<T>{
         stack = new ArrayList<T>();
     }
 
-    public T pop(){
+    public T pop() throws NoSuchElementException{
         try{
             T elementoSuperior = stack.removeLast();
             return elementoSuperior;
         }
         catch (NoSuchElementException e) {
-            return null;
+            throw e;
         }   
     }
 
@@ -24,13 +24,13 @@ public class Vector<T> implements InterfazStack<T>{
         stack.add(dato);
     }
 
-    public T top(){
+    public T top() throws NoSuchElementException{
         try{
             T elementoSuperior = stack.getLast();
             return elementoSuperior;
         }
         catch (NoSuchElementException e) {
-            return null;
+            throw e;
         }  
     }
 

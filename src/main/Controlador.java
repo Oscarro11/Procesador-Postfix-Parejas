@@ -2,26 +2,34 @@ package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class Controlador {
     private Vector<Integer> vector;
     private LectorDeTexto lector;
 
-    public Controlador(String rutaArchivo){
-        crearLector(rutaArchivo);
+    public Controlador(String rutaArchivo) throws InputMismatchException{
+        try {
+            crearLector(rutaArchivo);
+        } catch (IOException e) {
+            throw new InputMismatchException("La ruta del archivo a leer es invalida");
+        }
     }
 
-    public void crearLector(String rutaArchivo){
-        rutaArchivo = rutaArchivo.replace("\"", "");
+    public void crearLector(String rutaArchivo) throws IOException{
+        rutaArchivo = formatearRuta(rutaArchivo);
         
         try {
            lector = new LectorDeTexto(rutaArchivo); 
         } catch (IOException e) {
-            System.out.println("La ruta de archivo usada para el lector de texto es invalida");
-            lector = null;
+            throw e;
         } 
 
         reiniciarVector();
+    }
+
+    private String formatearRuta(String rutaArchivo){
+        return rutaArchivo.replace("\"", "");
     }
 
     public String procesarDocumentoRString(){

@@ -37,9 +37,17 @@ public class Controlador {
 
         for (int i = 0; i < lector.cantidadLineas(); i++){
             String linea = lector.textoLinea(i);
-            int resultadoLinea = procesarLinea(linea);
-            builder.append(mostrarResultado(linea, resultadoLinea));
-            builder.append("\n");
+
+            if (CalculosPostfix.lineaPostfixValida(linea)) {
+                int resultadoLinea = procesarLineaPostfix(linea);
+                builder.append(mostrarResultado(linea, resultadoLinea));
+                builder.append("\n");    
+            }
+            else {
+                builder.append(mensajeLineaInvalida(linea));
+                builder.append("\n");
+            }
+            
         }
 
         return builder.toString();
@@ -50,14 +58,14 @@ public class Controlador {
 
         for (int i = 0; i < lector.cantidadLineas(); i++){
             String linea = lector.textoLinea(i);
-            int resultadoLinea = procesarLinea(linea);
+            int resultadoLinea = procesarLineaPostfix(linea);
             resultados.add(resultadoLinea);
         }
 
         return resultados;
     }
 
-    private int procesarLinea(String linea){
+    private int procesarLineaPostfix(String linea){
         String[] contenidoLinea = linea.split("\\s+");
 
         for (String elemento : contenidoLinea) {
@@ -67,7 +75,7 @@ public class Controlador {
             } catch (Exception e) {
                 int operandoB = vector.pop();
                 int operandoA = vector.pop();
-                int resultado = decifrarCalculo(elemento, operandoA, operandoB);
+                int resultado = CalculosPostfix.realizarCalculo(elemento, operandoA, operandoB);
                 vector.push(resultado);
             }
         }
@@ -75,27 +83,8 @@ public class Controlador {
         return vector.pop();
     }
 
-    private int decifrarCalculo(String operador, int operandoA, int operandoB){
-        switch (operador) {
-            case "+":
-                return operandoA + operandoB;
-                
-            case "-":
-                return operandoA - operandoB;
-
-            case "*":
-                return operandoA * operandoB;
-
-            case "/":
-                return operandoA / operandoB;
-
-            case "%":
-                return operandoA % operandoB;
-
-            default:
-                System.out.println("El operando " + operador + " no se reconoce, por lo que no se puede operar con el");
-                return operandoA;
-        }
+    private String mensajeLineaInvalida(String linea) {
+        return "La linea '" + linea + "' no puede ser procesada en el formato postfix";
     }
 
     private void reiniciarVector(){

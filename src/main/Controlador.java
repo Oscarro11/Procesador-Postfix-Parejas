@@ -1,7 +1,6 @@
 package main;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class Controlador {
@@ -32,7 +31,7 @@ public class Controlador {
         return rutaArchivo.replace("\"", "");
     }
 
-    public String procesarDocumentoRString(){
+    public String procesarDocumento(){
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < lector.cantidadLineas(); i++){
@@ -47,22 +46,9 @@ public class Controlador {
                 builder.append(mensajeLineaInvalida(linea));
                 builder.append("\n");
             }
-            
         }
 
         return builder.toString();
-    }
-
-    public ArrayList<Integer> procesarDocumentoRNumero(){
-        ArrayList<Integer> resultados = new ArrayList<Integer>();
-
-        for (int i = 0; i < lector.cantidadLineas(); i++){
-            String linea = lector.textoLinea(i);
-            int resultadoLinea = procesarLineaPostfix(linea);
-            resultados.add(resultadoLinea);
-        }
-
-        return resultados;
     }
 
     private int procesarLineaPostfix(String linea){

@@ -33,7 +33,7 @@ public class App {
 
                 case "2":
                     if (controlador != null) {
-                        escribir(controlador.procesarDocumentoRString());
+                        escribir(controlador.procesarDocumento());
                         escribir("El archivo no contiene más operaciones\n");
                     }
                     else {

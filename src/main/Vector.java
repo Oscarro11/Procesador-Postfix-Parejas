@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class Vector<T> implements InterfazStack<T>{
+public class Vector<T> implements IStack<T>{
     private ArrayList<T> stack;
 
     public Vector(){
@@ -24,7 +24,7 @@ public class Vector<T> implements InterfazStack<T>{
         stack.add(dato);
     }
 
-    public T top() throws NoSuchElementException{
+    public T peek() throws NoSuchElementException{
         try{
             T elementoSuperior = stack.getLast();
             return elementoSuperior;
@@ -32,6 +32,10 @@ public class Vector<T> implements InterfazStack<T>{
         catch (NoSuchElementException e) {
             throw e;
         }  
+    }
+
+    public void clear() {
+        stack.clear();
     }
 
     public int size(){

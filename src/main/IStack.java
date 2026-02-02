@@ -1,9 +1,10 @@
 package main;
 
-public interface InterfazStack<T>{
+public interface IStack<T>{
     T pop();
     void push(T dato);
-    T top();
+    T peek();
     int size();
     boolean isEmpty();
+    void clear();
 }

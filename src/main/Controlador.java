@@ -74,7 +74,7 @@ public class Controlador {
     }
 
     private void reiniciarVector(){
-        vector = new Vector<Integer>();
+        vector.clear();
     }
 
     public String mostrarResultado(String linea, int resultado){

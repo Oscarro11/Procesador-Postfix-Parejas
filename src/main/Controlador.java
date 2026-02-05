@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 
 public class Controlador {
-    private Vector<Integer> vector;
     private LectorDeTexto lector;
+    private Calculadora calculadora = new Calculadora();
 
     public Controlador(String rutaArchivo) throws InputMismatchException{
         try {
@@ -22,9 +22,9 @@ public class Controlador {
            lector = new LectorDeTexto(rutaArchivo); 
         } catch (IOException e) {
             throw e;
-        } 
+        }
 
-        reiniciarVector();
+        calculadora.reiniciarVector();
     }
 
     private String formatearRuta(String rutaArchivo){
@@ -37,13 +37,13 @@ public class Controlador {
         for (int i = 0; i < lector.cantidadLineas(); i++){
             String linea = lector.textoLinea(i);
 
-            if (CalculosPostfix.lineaPostfixValida(linea)) {
-                int resultadoLinea = procesarLineaPostfix(linea);
+            try{
+                int resultadoLinea = calculadora.procesarLineaPostfix(linea);
                 builder.append(mostrarResultado(linea, resultadoLinea));
                 builder.append("\n");    
-            }
-            else {
+            } catch (Exception e) {
                 builder.append(mensajeLineaInvalida(linea));
+                builder.append(e.getMessage());
                 builder.append("\n");
             }
         }
@@ -51,30 +51,8 @@ public class Controlador {
         return builder.toString();
     }
 
-    private int procesarLineaPostfix(String linea){
-        String[] contenidoLinea = linea.split("\\s+");
-
-        for (String elemento : contenidoLinea) {
-            try {
-                int numero = Integer.parseInt(elemento);
-                vector.push(numero);
-            } catch (Exception e) {
-                int operandoB = vector.pop();
-                int operandoA = vector.pop();
-                int resultado = CalculosPostfix.realizarCalculo(elemento, operandoA, operandoB);
-                vector.push(resultado);
-            }
-        }
-
-        return vector.pop();
-    }
-
     private String mensajeLineaInvalida(String linea) {
-        return "La linea '" + linea + "' no puede ser procesada en el formato postfix";
-    }
-
-    private void reiniciarVector(){
-        vector.clear();
+        return "La linea '" + linea + "' no puede ser procesada en el formato postfix, debido a lo siguiente: ";
     }
 
     public String mostrarResultado(String linea, int resultado){

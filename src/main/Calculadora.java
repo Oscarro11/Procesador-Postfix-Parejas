@@ -51,7 +51,7 @@ public class Calculadora implements ICalculadora{
                 return operandoA % operandoB;
 
             default:
-                throw new InvalidParameterException("El simbolo " + operador + " no se reconoce, por lo que no se puede realizar la operacion");
+                throw new InvalidParameterException("El simbolo '" + operador + "' no se reconoce, por lo que no se puede realizar la operacion");
         }
     }
 

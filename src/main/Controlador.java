@@ -44,7 +44,7 @@ public class Controlador {
             } catch (Exception e) {
                 builder.append(mensajeLineaInvalida(linea));
                 builder.append(e.getMessage());
-                builder.append("\n");
+                builder.append("\n\n");
             }
         }
 
@@ -52,7 +52,7 @@ public class Controlador {
     }
 
     private String mensajeLineaInvalida(String linea) {
-        return "La linea '" + linea + "' no puede ser procesada en el formato postfix, debido a lo siguiente: ";
+        return "La linea '" + linea + "' no puede ser procesada en el formato postfix, debido a lo siguiente: \n";
     }
 
     public String mostrarResultado(String linea, int resultado){
